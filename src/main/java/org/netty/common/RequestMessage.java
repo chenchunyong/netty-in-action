@@ -6,6 +6,10 @@ public class RequestMessage extends Message<Operation> {
         return OperationType.fromOpCode(opCode).getOperationClass();
     }
 
+    public RequestMessage() {
+
+    }
+
     public RequestMessage(Long streamId, Operation operation) {
         MessageHeader header = new MessageHeader();
         header.setStreamId(streamId);
