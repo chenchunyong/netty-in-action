@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+    id 'idea'
+}
+
+group 'org.netty'
+version '1.0-SNAPSHOT'
+
+repositories {
+    jcenter()
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile ('io.netty:netty-all:4.1.39.Final')
+    compile('com.google.guava:guava:19.0')
+    compile('org.projectlombok:lombok:1.16.18')
+    compile('com.google.code.gson:gson:2.8.5')
+}
