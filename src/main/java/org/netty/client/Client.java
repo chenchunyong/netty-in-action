@@ -54,6 +54,7 @@ public class Client {
             requestPendingCenter.add(streamId, operationResultFuture);
             channelFuture.channel().writeAndFlush(requestMessage);
             OperationResult operationResult = operationResultFuture.get();
+            System.out.println(operationResult);
             channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
