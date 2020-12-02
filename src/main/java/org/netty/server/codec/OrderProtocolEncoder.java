@@ -11,7 +11,7 @@ public class OrderProtocolEncoder extends MessageToMessageEncoder<ResponseMessag
     @Override
     protected void encode(ChannelHandlerContext ctx, ResponseMessage msg, List<Object> out) throws Exception {
         ByteBuf byteBuf = ctx.alloc().buffer();
-        msg.decode(byteBuf);
+        msg.encode(byteBuf);
         out.add(byteBuf);
     }
 }

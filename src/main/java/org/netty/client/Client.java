@@ -16,9 +16,12 @@ import org.netty.client.handler.OperationResultFuture;
 import org.netty.client.handler.OperationToRequestMessageEncoder;
 import org.netty.client.handler.RequestPendingCenter;
 import org.netty.client.handler.ResponseDispatchHandler;
+import org.netty.common.OperationResult;
 import org.netty.common.RequestMessage;
 import org.netty.common.order.OrderOperation;
 import org.netty.util.IdUtil;
+
+import java.util.concurrent.ExecutionException;
 
 public class Client {
     public static void main(String[] args) {
@@ -50,9 +53,9 @@ public class Client {
             OperationResultFuture operationResultFuture = new OperationResultFuture();
             requestPendingCenter.add(streamId, operationResultFuture);
             channelFuture.channel().writeAndFlush(requestMessage);
-
+            OperationResult operationResult = operationResultFuture.get();
             channelFuture.channel().closeFuture().sync();
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         } finally {
             group.shutdownGracefully();
