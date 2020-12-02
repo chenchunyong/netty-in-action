@@ -10,11 +10,7 @@ import java.nio.charset.Charset;
 public abstract class Message<T extends MessageBody> {
     private MessageHeader messageHeader;
     private T messageBody;
-
-    public T getMessageBody() {
-        return messageBody;
-    }
-
+    
     public void encode(ByteBuf byteBuf) {
         byteBuf.writeInt(messageHeader.getVersion());
         byteBuf.writeLong(messageHeader.getStreamId());

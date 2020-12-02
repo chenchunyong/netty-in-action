@@ -1,5 +1,8 @@
 package org.netty.common;
 
+import lombok.Data;
+
+@Data
 public class RequestMessage extends Message<Operation> {
     @Override
     public Class getMessageBodyDecodeClass(int opCode) {
