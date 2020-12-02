@@ -1,12 +1,15 @@
 package org.netty.common;
 
+import org.netty.common.order.OrderOperation;
+import org.netty.common.order.OrderOperationResult;
 import org.netty.keepalive.KeepaliveOperation;
 import org.netty.keepalive.KeepaliveOperationResult;
 
 import java.util.function.Predicate;
 
 public enum OperationType {
-    KEEPALIVE(2, KeepaliveOperation.class, KeepaliveOperationResult.class);
+    KEEPALIVE(2, KeepaliveOperation.class, KeepaliveOperationResult.class),
+    ORDER(3, OrderOperation.class, OrderOperationResult.class);
 
     public int getOpCode() {
         return opCode;

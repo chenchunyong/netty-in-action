@@ -26,22 +26,23 @@ public class Client {
         bootstrap.channel(NioSocketChannel.class);
         NioEventLoopGroup group = new NioEventLoopGroup();
         RequestPendingCenter requestPendingCenter = new RequestPendingCenter();
-        bootstrap.group(group);
-        bootstrap.handler(new ChannelInitializer<NioSocketChannel>() {
-            @Override
-            protected void initChannel(NioSocketChannel ch) throws Exception {
-                ChannelPipeline pipeline = ch.pipeline();
-                pipeline.addLast(new OrderFrameDecoder());
-                pipeline.addLast(new OrderFrameEncoder());
-                pipeline.addLast(new OrderProtocolDecoder());
-                pipeline.addLast(new OrderProtocolEncoder());
-                pipeline.addLast(new OperationToRequestMessageEncoder());
-                pipeline.addLast(new LoggingHandler(LogLevel.INFO));
-                pipeline.addLast(new ResponseDispatchHandler(requestPendingCenter));
-            }
-        });
-        ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 3000);
+
         try {
+            bootstrap.group(group);
+            bootstrap.handler(new ChannelInitializer<NioSocketChannel>() {
+                @Override
+                protected void initChannel(NioSocketChannel ch) throws Exception {
+                    ChannelPipeline pipeline = ch.pipeline();
+                    pipeline.addLast(new OrderFrameDecoder());
+                    pipeline.addLast(new OrderFrameEncoder());
+                    pipeline.addLast(new OrderProtocolDecoder());
+                    pipeline.addLast(new OrderProtocolEncoder());
+                    pipeline.addLast(new OperationToRequestMessageEncoder());
+                    pipeline.addLast(new LoggingHandler(LogLevel.INFO));
+                    pipeline.addLast(new ResponseDispatchHandler(requestPendingCenter));
+                }
+            });
+            ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 3000);
             channelFuture.sync();
             long streamId = IdUtil.nextId();
             RequestMessage requestMessage = new RequestMessage(
